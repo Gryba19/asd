@@ -2,6 +2,7 @@ package com.example.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
@@ -11,6 +12,9 @@ import android.widget.Toast;
 
 import com.example.myapplication.MyDatabase;
 import com.example.myapplication.R;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity {
     MyDatabase database;
@@ -28,20 +32,29 @@ public class MainActivity extends AppCompatActivity {
         textView=findViewById(R.id.textView);
         addCar= findViewById(R.id.addCar);
         clearAll=findViewById(R.id.clearAll);
-
+        refreshActivity();
         addCar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                database.registerCar("Ford","Focus");
+
+
+                new Timer().schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        runOnUiThread(() -> MainActivity.this.refreshActivity());
+                    }
+                }, (long) 0.100);
+               Intent intent = new Intent(MainActivity.this, MainActivity2.class);
+              startActivity(intent);
+                //database.registerCar("Ford", "Focus");
+                refreshActivity();
             }
         });
-        refreshActivity();
+
         }
 
         public void removeAll(View view){
             database.deleteAll();
-            refreshActivity();
-
         }
         private void refreshActivity(){
             StringBuilder builder = new StringBuilder();
