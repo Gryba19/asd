@@ -1,14 +1,12 @@
 package com.example.myapplication;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.os.Bundle;
 
 public class MyDatabase extends SQLiteOpenHelper {
 
@@ -50,5 +48,11 @@ public class MyDatabase extends SQLiteOpenHelper {
       SQLiteDatabase db = getReadableDatabase();
       String[] columns={"id","name","model"};
       return db.query("cars", columns, "id=", new String[] {String.valueOf(id)}, null ,null, null);
+   }
+   public int deleteCar(int id){
+      SQLiteDatabase db = getWritableDatabase();
+      String[] columns={"id","name","model"};
+      //db.delete("cars",null,null);
+      return db.delete("cars", "id=", new String[] {String.valueOf(id)});
    }
 }
