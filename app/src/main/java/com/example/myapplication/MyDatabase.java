@@ -23,6 +23,7 @@ public class MyDatabase extends SQLiteOpenHelper {
       );
    }
 
+
    @Override
    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
@@ -49,10 +50,9 @@ public class MyDatabase extends SQLiteOpenHelper {
       String[] columns={"id","name","model"};
       return db.query("cars", columns, "id=", new String[] {String.valueOf(id)}, null ,null, null);
    }
-   public int deleteCar(int id){
+   public int deleteCar(String id){
       SQLiteDatabase db = getWritableDatabase();
       String[] columns={"id","name","model"};
-      //db.delete("cars",null,null);
-      return db.delete("cars", "id=", new String[] {String.valueOf(id)});
+      return db.delete("cars", "id="+id, null);
    }
 }

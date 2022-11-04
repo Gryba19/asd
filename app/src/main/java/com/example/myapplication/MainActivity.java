@@ -22,16 +22,24 @@ public class MainActivity extends AppCompatActivity {
     Button addCar;
     Button clearAll;
     Button refresh;
+    Button delete;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         database= new MyDatabase(this, "cars",null,1);
-
+        refresh=findViewById(R.id.Odswiez);
         textView=findViewById(R.id.textView);
         addCar= findViewById(R.id.addCar);
         clearAll=findViewById(R.id.clearAll);
+        delete=findViewById(R.id.usun);
+        refresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                refreshActivity();
+            }
+        });
         refreshActivity();
         addCar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,7 +58,15 @@ public class MainActivity extends AppCompatActivity {
                 refreshActivity();
             }
         });
-
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, ActivityDelete.class);
+                startActivity(intent);
+                //database.registerCar("Ford", "Focus");
+                refreshActivity();
+            }
+        });
         }
 
         public void removeAll(View view){
